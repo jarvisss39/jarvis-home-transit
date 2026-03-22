@@ -1,0 +1,135 @@
+{
+  "updated": "10:24:44 AM",
+  "bus": [
+    {
+      "name": "C St Ne+17 St Ne",
+      "items": [
+        {
+          "RouteID": "D24",
+          "DirectionText": "West to Mcpherson Sq",
+          "DirectionNum": "1",
+          "Minutes": 4,
+          "VehicleID": "4512",
+          "TripID": "35018010"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "D St Ne+17 St Ne",
+      "items": [
+        {
+          "RouteID": "D24",
+          "DirectionText": "East to Deanwood",
+          "DirectionNum": "0",
+          "Minutes": 7,
+          "VehicleID": "4652",
+          "TripID": "23468010"
+        }
+      ],
+      "error": null
+    }
+  ],
+  "metro": [
+    {
+      "name": "Stadium-Armory",
+      "items": [
+        {
+          "Car": "8",
+          "Destination": "NewCrlton",
+          "DestinationCode": null,
+          "DestinationName": "NewCrlton",
+          "Group": "1",
+          "Line": "OR",
+          "LocationCode": "D05",
+          "LocationName": "Capitol South",
+          "Min": "ARR"
+        },
+        {
+          "Car": "8",
+          "Destination": "Vienna",
+          "DestinationCode": "K08",
+          "DestinationName": "Vienna/Fairfax-GMU",
+          "Group": "2",
+          "Line": "OR",
+          "LocationCode": "D05",
+          "LocationName": "Capitol South",
+          "Min": "ARR"
+        },
+        {
+          "Car": "8",
+          "Destination": "Ashburn",
+          "DestinationCode": "N12",
+          "DestinationName": "Ashburn",
+          "Group": "2",
+          "Line": "SV",
+          "LocationCode": "D05",
+          "LocationName": "Capitol South",
+          "Min": "7"
+        },
+        {
+          "Car": "8",
+          "Destination": "NewCrlton",
+          "DestinationCode": null,
+          "DestinationName": "NewCrlton",
+          "Group": "1",
+          "Line": "SV",
+          "LocationCode": "D05",
+          "LocationName": "Capitol South",
+          "Min": "9"
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "Union Station",
+      "items": [
+        {
+          "Car": "8",
+          "Destination": "Shady Grv",
+          "DestinationCode": null,
+          "DestinationName": "Shady Grv",
+          "Group": "2",
+          "Line": "RD",
+          "LocationCode": "B03",
+          "LocationName": "Union Station",
+          "Min": "1"
+        },
+        {
+          "Car": "6",
+          "Destination": "Glenmont",
+          "DestinationCode": "B11",
+          "DestinationName": "Glenmont",
+          "Group": "1",
+          "Line": "RD",
+          "LocationCode": "B03",
+          "LocationName": "Union Station",
+          "Min": "2"
+        },
+        {
+          "Car": "6",
+          "Destination": "Shady Grv",
+          "DestinationCode": null,
+          "DestinationName": "Shady Grv",
+          "Group": "2",
+          "Line": "RD",
+          "LocationCode": "B03",
+          "LocationName": "Union Station",
+          "Min": "3"
+        },
+        {
+          "Car": "8",
+          "Destination": "Glenmont",
+          "DestinationCode": "B11",
+          "DestinationName": "Glenmont",
+          "Group": "1",
+          "Line": "RD",
+          "LocationCode": "B03",
+          "LocationName": "Union Station",
+          "Min": "7"
+        }
+      ],
+      "error": null
+    }
+  ]
+}

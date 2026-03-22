@@ -1,0 +1,160 @@
+{
+  "updated": "12:31:32 PM",
+  "home": {
+    "lat": 38.895643,
+    "lon": -76.980581,
+    "max_miles_lime": 0.15,
+    "max_miles_cabi": 0.25
+  },
+  "lime": {
+    "ok": true,
+    "scooters": 13,
+    "ebikes": 1,
+    "total": 14,
+    "markers": [
+      {
+        "lat": 38.8964,
+        "lon": -76.9831,
+        "type": "scooter",
+        "distance_miles": 0.145
+      },
+      {
+        "lat": 38.8961,
+        "lon": -76.9832,
+        "type": "scooter",
+        "distance_miles": 0.144
+      },
+      {
+        "lat": 38.8951,
+        "lon": -76.9815,
+        "type": "scooter",
+        "distance_miles": 0.062
+      },
+      {
+        "lat": 38.8957,
+        "lon": -76.9801,
+        "type": "scooter",
+        "distance_miles": 0.026
+      },
+      {
+        "lat": 38.8961,
+        "lon": -76.9826,
+        "type": "ebike",
+        "distance_miles": 0.113
+      },
+      {
+        "lat": 38.8944,
+        "lon": -76.9807,
+        "type": "scooter",
+        "distance_miles": 0.086
+      },
+      {
+        "lat": 38.8958,
+        "lon": -76.9817,
+        "type": "scooter",
+        "distance_miles": 0.061
+      },
+      {
+        "lat": 38.8955,
+        "lon": -76.9825,
+        "type": "scooter",
+        "distance_miles": 0.104
+      },
+      {
+        "lat": 38.8957,
+        "lon": -76.9803,
+        "type": "scooter",
+        "distance_miles": 0.016
+      },
+      {
+        "lat": 38.8968,
+        "lon": -76.9783,
+        "type": "scooter",
+        "distance_miles": 0.146
+      },
+      {
+        "lat": 38.8976,
+        "lon": -76.981,
+        "type": "scooter",
+        "distance_miles": 0.137
+      },
+      {
+        "lat": 38.8948,
+        "lon": -76.9806,
+        "type": "scooter",
+        "distance_miles": 0.058
+      },
+      {
+        "lat": 38.8972,
+        "lon": -76.9822,
+        "type": "scooter",
+        "distance_miles": 0.138
+      },
+      {
+        "lat": 38.8961,
+        "lon": -76.9826,
+        "type": "scooter",
+        "distance_miles": 0.113
+      }
+    ],
+    "error": null
+  },
+  "cabi": {
+    "ok": true,
+    "bikes": 32,
+    "ebikes": 5,
+    "docks": 23,
+    "markers": [
+      {
+        "lat": 38.893062,
+        "lon": -76.982464,
+        "name": "16th St & North Carolina Ave NE",
+        "bikes": 3,
+        "ebikes": 0,
+        "docks": 14,
+        "distance_miles": 0.205
+      },
+      {
+        "lat": 38.897195,
+        "lon": -76.983575,
+        "name": "15th & F St NE",
+        "bikes": 12,
+        "ebikes": 0,
+        "docks": 8,
+        "distance_miles": 0.193
+      },
+      {
+        "lat": 38.897808,
+        "lon": -76.979634,
+        "name": "Rosedale Rec Center",
+        "bikes": 17,
+        "ebikes": 5,
+        "docks": 1,
+        "distance_miles": 0.158
+      }
+    ],
+    "error": null
+  },
+  "cabi_free_ebikes": {
+    "ok": true,
+    "total": 3,
+    "markers": [
+      {
+        "lat": 38.896733046,
+        "lon": -76.982655168,
+        "distance_miles": 0.135
+      },
+      {
+        "lat": 38.897024989,
+        "lon": -76.983562827,
+        "distance_miles": 0.187
+      },
+      {
+        "lat": 38.898064137,
+        "lon": -76.979542494,
+        "distance_miles": 0.176
+      }
+    ],
+    "error": null
+  }
+}

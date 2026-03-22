@@ -1,0 +1,57 @@
+{
+  "updated": "10:24:50 AM",
+  "location": "Washington D.C.",
+  "current": {
+    "temp": 58,
+    "desc": "clear sky"
+  },
+  "hourly": [
+    {
+      "time": "2026-03-22 15:00:00",
+      "temp": 58,
+      "desc": "clear sky"
+    },
+    {
+      "time": "2026-03-22 18:00:00",
+      "temp": 65,
+      "desc": "scattered clouds"
+    },
+    {
+      "time": "2026-03-22 21:00:00",
+      "temp": 74,
+      "desc": "broken clouds"
+    },
+    {
+      "time": "2026-03-23 00:00:00",
+      "temp": 75,
+      "desc": "broken clouds"
+    },
+    {
+      "time": "2026-03-23 03:00:00",
+      "temp": 68,
+      "desc": "broken clouds"
+    },
+    {
+      "time": "2026-03-23 06:00:00",
+      "temp": 63,
+      "desc": "light rain"
+    }
+  ],
+  "daily": [
+    {
+      "date": "2026-03-22",
+      "temp": 58,
+      "desc": "clear sky"
+    },
+    {
+      "date": "2026-03-23",
+      "temp": 52,
+      "desc": "light rain"
+    },
+    {
+      "date": "2026-03-24",
+      "temp": 42,
+      "desc": "overcast clouds"
+    }
+  ]
+}
