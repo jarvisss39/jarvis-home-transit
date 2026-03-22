@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="refresh" content="30" />
+  <title>JARVIS HOME TRANSIT Dashboard</title>
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #0b0f14;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #58a6ff;
+      letter-spacing: 1px;
+    }
+
+    .updated {
+      font-size: 16px;
+      color: #9aa4af;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 16px;
+      height: calc(100vh - 80px);
+    }
+
+    .panel {
+      background: #11161d;
+      border: 1px solid #222a33;
+      border-radius: 14px;
+      padding: 16px;
+      overflow: hidden;
+    }
+
+    .left-panel {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .right-panel {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: 16px;
+      min-height: 0;
+    }
+
+    .panel-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #58a6ff;
+      margin-bottom: 14px;
+    }
+
+    .subsection {
+      margin-bottom: 18px;
+    }
+
+    .subsection:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-title {
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 90px 1fr 95px;
+      gap: 12px;
+      align-items: center;
+      background: #1a212b;
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 8px;
+    }
+
+    .route {
+      font-size: 21px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .direction {
+      font-size: 17px;
+      color: #c7d1db;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .minutes {
+      font-size: 21px;
+      font-weight: 700;
+      text-align: right;
+    }
+
+    .placeholder {
+      font-size: 17px;
+      color: #9aa4af;
+      padding: 8px 0;
+    }
+
+    .error {
+      color: #ff6b6b;
+    }
+
+    .red { color: #ff5c5c; }
+    .yellow { color: #ffb347; }
+    .green { color: #5cd65c; }
+    .gray { color: #9aa4af; }
+
+    .weather-current {
+      background: #1a212b;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+
+    .weather-location {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .weather-temp {
+      font-size: 34px;
+      font-weight: 700;
+      color: #58a6ff;
+      margin-bottom: 4px;
+    }
+
+    .weather-desc {
+      font-size: 16px;
+      color: #c7d1db;
+      text-transform: capitalize;
+    }
+
+    .weather-block-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 10px 0 8px;
+      color: #ffffff;
+    }
+
+    .weather-row {
+      display: grid;
+      grid-template-columns: 90px 1fr 70px;
+      gap: 10px;
+      align-items: center;
+      background: #1a212b;
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 7px;
+    }
+
+    .weather-time,
+    .weather-date {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .weather-text {
+      font-size: 14px;
+      color: #c7d1db;
+      text-transform: capitalize;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .weather-value {
+      font-size: 16px;
+      font-weight: 700;
+      color: #58a6ff;
+      text-align: right;
+    }
+
+    #bike-map {
+  width: 100%;
+  height: 100%;
+  min-height: 360px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #222a33;
+}
+
+.bike-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  padding-top: 10px;
+  font-size: 13px;
+  color: #c7d1db;
+}
+
+.bike-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bike-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  display: inline-block;
+  border: 1px solid #222a33;
+}
+
+.bike-dot-green {
+  background: #34c759;
+}
+
+.bike-dot-white {
+  background: #ffffff;
+}
+
+.bike-dot-red {
+  background: #ff3b30;
+}
+
+.bike-dot-gray {
+  background: #8e8e93;
+}
+
+    .leaflet-popup-content {
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="title">JARVIS HOME TRANSIT DASHBOARD</div>
+    <div class="updated" id="updated">Updated: --</div>
+  </div>
+
+  <div class="main-grid">
+    <div class="panel left-panel">
+      <div class="panel-title">WMATA</div>
+
+      <div class="subsection">
+        <div class="section-title">BUS</div>
+        <div id="bus-content"></div>
+      </div>
+
+      <div class="subsection">
+        <div class="section-title">METRO</div>
+        <div id="metro-content"></div>
+      </div>
+    </div>
+
+    <div class="right-panel">
+      <div class="panel">
+        <div class="panel-title">BIKE TEST 123</div>
+        <div id="bike-content"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">WEATHER</div>
+        <div id="weather-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const HOME_LAT = 38.895643;
+    const HOME_LON = -76.980581;
+    const HOME_ZOOM = 16;
+
+    function minuteClass(value) {
+      if (value === "ARR" || value === "BRD") return "red";
+      const n = parseInt(String(value).replace(" min", ""));
+      if (isNaN(n)) return "gray";
+      if (n <= 4) return "red";
+      if (n <= 10) return "yellow";
+      return "green";
+    }
+
+    function formatBusMinutes(value) {
+      const n = Number(value);
+      if (!isNaN(n)) return n <= 0 ? "ARR" : `${n} min`;
+      return String(value || "?");
+    }
+
+    function formatMetroMinutes(value) {
+      const text = String(value || "?").trim();
+      if (text === "ARR" || text === "BRD") return text;
+      const n = Number(text);
+      if (!isNaN(n)) return n <= 0 ? "ARR" : `${n} min`;
+      return text;
+    }
+
+    function formatHour(dtText) {
+      const date = new Date(dtText.replace(" ", "T"));
+      return date.toLocaleTimeString([], { hour: "numeric", hour12: true });
+    }
+
+    function formatDate(dateText) {
+      const date = new Date(dateText + "T00:00:00");
+      return date.toLocaleDateString([], {
+        weekday: "short",
+        month: "numeric",
+        day: "numeric"
+      });
+    }
+
+    function createRow(left, middle, right, rightClass = "") {
+      const row = document.createElement("div");
+      row.className = "row";
+      row.innerHTML = `
+        <div class="route">${left}</div>
+        <div class="direction">${middle}</div>
+        <div class="minutes ${rightClass}">${right}</div>
+      `;
+      return row;
+    }
+
+    async function loadWmata() {
+      try {
+        const response = await fetch("wmata_data.json?_=" + Date.now());
+        const data = await response.json();
+
+        document.getElementById("updated").textContent = `Updated: ${data.updated}`;
+
+        const busContent = document.getElementById("bus-content");
+        busContent.innerHTML = "";
+
+        data.bus.forEach(stop => {
+          const section = document.createElement("div");
+          section.className = "subsection";
+
+          const title = document.createElement("div");
+          title.className = "section-title";
+          title.textContent = stop.name;
+          section.appendChild(title);
+
+          if (stop.error) {
+            const err = document.createElement("div");
+            err.className = "placeholder error";
+            err.textContent = "Error: " + stop.error;
+            section.appendChild(err);
+          } else if (!stop.items || stop.items.length === 0) {
+            const empty = document.createElement("div");
+            empty.className = "placeholder";
+            empty.textContent = "No buses arriving soon";
+            section.appendChild(empty);
+          } else {
+            stop.items.forEach(bus => {
+              const minutes = formatBusMinutes(bus.Minutes);
+              section.appendChild(
+                createRow(
+                  bus.RouteID || "?",
+                  bus.DirectionText || "?",
+                  minutes,
+                  minuteClass(minutes)
+                )
+              );
+            });
+          }
+
+          busContent.appendChild(section);
+        });
+
+        const metroContent = document.getElementById("metro-content");
+        metroContent.innerHTML = "";
+
+        data.metro.forEach(station => {
+          const section = document.createElement("div");
+          section.className = "subsection";
+
+          const title = document.createElement("div");
+          title.className = "section-title";
+          title.textContent = station.name;
+          section.appendChild(title);
+
+          if (station.error) {
+            const err = document.createElement("div");
+            err.className = "placeholder error";
+            err.textContent = "Error: " + station.error;
+            section.appendChild(err);
+          } else if (!station.items || station.items.length === 0) {
+            const empty = document.createElement("div");
+            empty.className = "placeholder";
+            empty.textContent = "No trains arriving soon";
+            section.appendChild(empty);
+          } else {
+            station.items.forEach(train => {
+              const minutes = formatMetroMinutes(train.Min);
+              section.appendChild(
+                createRow(
+                  train.Line || "?",
+                  train.DestinationName || "?",
+                  minutes,
+                  minuteClass(minutes)
+                )
+              );
+            });
+          }
+
+          metroContent.appendChild(section);
+        });
+      } catch (error) {
+        document.getElementById("bus-content").innerHTML =
+          `<div class="placeholder error">Failed to load WMATA data</div>`;
+        document.getElementById("metro-content").innerHTML =
+          `<div class="placeholder error">Failed to load WMATA data</div>`;
+      }
+    }
+
+    async function loadWeather() {
+      try {
+        const response = await fetch("weather_data.json?_=" + Date.now());
+        const data = await response.json();
+
+        const weatherContent = document.getElementById("weather-content");
+        weatherContent.innerHTML = "";
+
+        if (data.error) {
+          weatherContent.innerHTML =
+            `<div class="placeholder error">Weather error: ${JSON.stringify(data.error)}</div>`;
+          return;
+        }
+
+        const current = document.createElement("div");
+        current.className = "weather-current";
+        current.innerHTML = `
+          <div class="weather-location">${data.location || "Weather"}</div>
+          <div class="weather-temp">${data.current.temp}°F</div>
+          <div class="weather-desc">${data.current.desc}</div>
+        `;
+        weatherContent.appendChild(current);
+
+        const hourlyTitle = document.createElement("div");
+        hourlyTitle.className = "weather-block-title";
+        hourlyTitle.textContent = "Hourly";
+        weatherContent.appendChild(hourlyTitle);
+
+        (data.hourly || []).slice(0, 4).forEach(item => {
+          const row = document.createElement("div");
+          row.className = "weather-row";
+          row.innerHTML = `
+            <div class="weather-time">${formatHour(item.time)}</div>
+            <div class="weather-text">${item.desc}</div>
+            <div class="weather-value">${item.temp}°</div>
+          `;
+          weatherContent.appendChild(row);
+        });
+
+        const dailyTitle = document.createElement("div");
+        dailyTitle.className = "weather-block-title";
+        dailyTitle.textContent = "3-Day";
+        weatherContent.appendChild(dailyTitle);
+
+        (data.daily || []).slice(0, 3).forEach(item => {
+          const row = document.createElement("div");
+          row.className = "weather-row";
+          row.innerHTML = `
+            <div class="weather-date">${formatDate(item.date)}</div>
+            <div class="weather-text">${item.desc}</div>
+            <div class="weather-value">${item.temp}°</div>
+          `;
+          weatherContent.appendChild(row);
+        });
+      } catch (error) {
+        document.getElementById("weather-content").innerHTML =
+          `<div class="placeholder error">Failed to load weather data</div>`;
+      }
+    }
+
+    async function loadBike() {
+  try {
+    const response = await fetch("bike_data.json?_=" + Date.now());
+    const data = await response.json();
+
+    const bikeContent = document.getElementById("bike-content");
+    bikeContent.innerHTML = "";
+
+    if (
+      (data.lime && data.lime.error) ||
+      (data.cabi && data.cabi.error) ||
+      (data.cabi_free_ebikes && data.cabi_free_ebikes.error)
+    ) {
+      bikeContent.innerHTML =
+        `<div class="placeholder error">Failed to load bike map</div>`;
+      return;
+    }
+
+    const mapWrapper = document.createElement("div");
+    mapWrapper.style.display = "flex";
+    mapWrapper.style.flexDirection = "column";
+    mapWrapper.style.height = "100%";
+
+    const mapDiv = document.createElement("div");
+    mapDiv.id = "bike-map";
+    mapWrapper.appendChild(mapDiv);
+
+    const legend = document.createElement("div");
+    legend.className = "bike-legend";
+    legend.innerHTML = `
+      <div class="bike-legend-item">
+        <span class="bike-dot bike-dot-green"></span>
+        <span>Lime scooter</span>
+      </div>
+      <div class="bike-legend-item">
+        <span class="bike-dot bike-dot-white"></span>
+        <span>Lime e-bike</span>
+      </div>
+      <div class="bike-legend-item">
+        <span class="bike-dot bike-dot-red"></span>
+        <span>CaBi dock station</span>
+      </div>
+      <div class="bike-legend-item">
+        <span class="bike-dot bike-dot-gray"></span>
+        <span>CaBi free e-bike</span>
+      </div>
+    `;
+    mapWrapper.appendChild(legend);
+
+    bikeContent.appendChild(mapWrapper);
+
+    const map = L.map("bike-map").setView([HOME_LAT, HOME_LON], HOME_ZOOM);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "&copy; OpenStreetMap"
+    }).addTo(map);
+
+    // home marker = blue square
+    L.rectangle(
+      [
+        [HOME_LAT - 0.00018, HOME_LON - 0.00018],
+        [HOME_LAT + 0.00018, HOME_LON + 0.00018]
+      ],
+      {
+        color: "#58a6ff",
+        fillColor: "#58a6ff",
+        fillOpacity: 1,
+        weight: 2
+      }
+    )
+      .bindPopup("Home")
+      .addTo(map);
+
+    // visual radius circle
+    L.circle([HOME_LAT, HOME_LON], {
+      radius: 241.4,
+      color: "#58a6ff",
+      fillColor: "#58a6ff",
+      fillOpacity: 0.06,
+      weight: 1
+    }).addTo(map);
+
+    // lime markers: smaller
+    (data.lime?.markers || []).forEach(m => {
+      const isScooter = m.type === "scooter";
+      const fill = isScooter ? "#34c759" : "#ffffff";
+      const stroke = isScooter ? "#34c759" : "#666666";
+
+      L.circleMarker([m.lat, m.lon], {
+        radius: 3,
+        color: stroke,
+        fillColor: fill,
+        fillOpacity: 0.95,
+        weight: 1.5
+      })
+        .bindPopup(`Lime ${m.type}<br>${m.distance_miles ?? "?"} mi away`)
+        .addTo(map);
+    });
+
+    // cabi dock stations: smaller red dots
+    (data.cabi?.markers || []).forEach(m => {
+      const dockBikes = m.bikes ?? 0;
+      const dockEbikes = m.ebikes ?? 0;
+
+      L.circleMarker([m.lat, m.lon], {
+        radius: 4,
+        color: "#ff3b30",
+        fillColor: "#ff3b30",
+        fillOpacity: 0.95,
+        weight: 1.5
+      })
+        .bindPopup(`
+          <strong>${m.name}</strong><br>
+          Dock bikes: ${dockBikes}<br>
+          Dock e-bikes: ${dockEbikes}<br>
+          Open docks: ${m.docks ?? 0}<br>
+          Distance: ${m.distance_miles ?? "?"} mi
+        `)
+        .addTo(map);
+    });
+
+    // cabi free ebikes: smaller gray dots
+    (data.cabi_free_ebikes?.markers || []).forEach(m => {
+      L.circleMarker([m.lat, m.lon], {
+        radius: 3,
+        color: "#8e8e93",
+        fillColor: "#8e8e93",
+        fillOpacity: 0.95,
+        weight: 1.5
+      })
+        .bindPopup(`CaBi free e-bike<br>${m.distance_miles ?? "?"} mi away`)
+        .addTo(map);
+    });
+
+  } catch (error) {
+    document.getElementById("bike-content").innerHTML =
+      `<div class="placeholder error">Failed to load bike map</div>`;
+  }
+}
+
+    async function loadAll() {
+      await loadWmata();
+      await loadBike();
+      await loadWeather();
+    }
+
+    loadAll();
+  </script>
+</body>
+</html>
